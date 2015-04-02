@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['clearbuffer',['ClearBuffer',['../classAsterion_1_1ConnectionState.html#adb7e53b007721e767ecc12b7ad2774ac',1,'Asterion::ConnectionState']]],
-  ['connecteventhandler',['ConnectEventHandler',['../namespaceAsterion.html#a2a28db7d2f05f0681f449c943b3ae7bc',1,'Asterion']]],
-  ['connectionstate',['ConnectionState',['../classAsterion_1_1ConnectionState.html#a8e08c3d60a2f4a31954dcd8c61821f86',1,'Asterion::ConnectionState']]]
+  ['clear',['Clear',['../classAsterion_1_1Buffer.html#a1c8149248473a8a87baa09b13963da51',1,'Asterion::Buffer']]],
+  ['connecteventhandler',['ConnectEventHandler',['../namespaceAsterion.html#a4eb424f673809e9b97a563ddd0f4db12',1,'Asterion']]],
+  ['connection',['Connection',['../classAsterion_1_1Connection.html#a64ddc624e776dc54e75505ff877cc2c1',1,'Asterion::Connection']]]
 ];

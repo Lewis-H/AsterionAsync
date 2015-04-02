@@ -1,6 +1,6 @@
 var searchData=
 [
   ['delimiter',['Delimiter',['../classAsterion_1_1Server.html#a196c0514744f4e6a88ed5081d55709e7',1,'Asterion::Server']]],
-  ['disconnectclient',['DisconnectClient',['../classAsterion_1_1Server.html#a93954ee71f8d0324bcc0d6616952b2a1',1,'Asterion::Server']]],
-  ['disconnecteventhandler',['DisconnectEventHandler',['../namespaceAsterion.html#abd656f1ebffed3a17a1a0f809979f363',1,'Asterion']]]
+  ['disconnectclient',['DisconnectClient',['../classAsterion_1_1Server.html#a8f6acbef91dc68fa441b0f8746f8acd4',1,'Asterion::Server']]],
+  ['disconnecteventhandler',['DisconnectEventHandler',['../namespaceAsterion.html#a52e1669733e14e0bf24951e126e81546',1,'Asterion']]]
 ];

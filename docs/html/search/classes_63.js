@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['connectionstate',['ConnectionState',['../classAsterion_1_1ConnectionState.html',1,'Asterion']]]
+  ['connection',['Connection',['../classAsterion_1_1Connection.html',1,'Asterion']]]
 ];

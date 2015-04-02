@@ -4,12 +4,18 @@
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
-package \hyperlink{namespaceAsterion_1_1Out}{Out}
+package \hyperlink{namespaceAsterion_1_1Exceptions}{Exceptions}
+\item 
+package \hyperlink{namespaceAsterion_1_1Limits}{Limits}
+\item 
+package \hyperlink{namespaceAsterion_1_1Logging}{Logging}
 \end{DoxyCompactItemize}
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \hyperlink{classAsterion_1_1ConnectionState}{Connection\-State}
+class \hyperlink{classAsterion_1_1Buffer}{Buffer}
+\item 
+class \hyperlink{classAsterion_1_1Connection}{Connection}
 \item 
 class \hyperlink{classAsterion_1_1Server}{Server}
 \item 
@@ -18,15 +24,18 @@ class {\bfseries Utils}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{namespaceAsterion_a8df76ce0b97fca73a25888bd3b8cf7df}{delegate void \hyperlink{namespaceAsterion_a8df76ce0b97fca73a25888bd3b8cf7df}{Receive\-Event\-Handler} (Sockets.\-Tcp\-Client client\-Connection, string str\-Packet)}\label{namespaceAsterion_a8df76ce0b97fca73a25888bd3b8cf7df}
+\hypertarget{namespaceAsterion_a29f5d934388f3024f1acb2a76ca181d4}{delegate void \hyperlink{namespaceAsterion_a29f5d934388f3024f1acb2a76ca181d4}{Receive\-Event\-Handler} (Tcp\-Client Client, string packet)}\label{namespaceAsterion_a29f5d934388f3024f1acb2a76ca181d4}
 
-\begin{DoxyCompactList}\small\item\em The recieve event handler delegate. \end{DoxyCompactList}\item 
-\hypertarget{namespaceAsterion_a2a28db7d2f05f0681f449c943b3ae7bc}{delegate void \hyperlink{namespaceAsterion_a2a28db7d2f05f0681f449c943b3ae7bc}{Connect\-Event\-Handler} (Sockets.\-Tcp\-Client client\-Connection)}\label{namespaceAsterion_a2a28db7d2f05f0681f449c943b3ae7bc}
+\begin{DoxyCompactList}\small\item\em Recieve event handler. \end{DoxyCompactList}\item 
+\hypertarget{namespaceAsterion_a4eb424f673809e9b97a563ddd0f4db12}{delegate void \hyperlink{namespaceAsterion_a4eb424f673809e9b97a563ddd0f4db12}{Connect\-Event\-Handler} (Tcp\-Client Client)}\label{namespaceAsterion_a4eb424f673809e9b97a563ddd0f4db12}
 
-\begin{DoxyCompactList}\small\item\em The connect event handler delegate. \end{DoxyCompactList}\item 
-\hypertarget{namespaceAsterion_abd656f1ebffed3a17a1a0f809979f363}{delegate void \hyperlink{namespaceAsterion_abd656f1ebffed3a17a1a0f809979f363}{Disconnect\-Event\-Handler} (Sockets.\-Tcp\-Client client\-Connection)}\label{namespaceAsterion_abd656f1ebffed3a17a1a0f809979f363}
+\begin{DoxyCompactList}\small\item\em Connect event handler. \end{DoxyCompactList}\item 
+\hypertarget{namespaceAsterion_a52e1669733e14e0bf24951e126e81546}{delegate void \hyperlink{namespaceAsterion_a52e1669733e14e0bf24951e126e81546}{Disconnect\-Event\-Handler} (Tcp\-Client Client)}\label{namespaceAsterion_a52e1669733e14e0bf24951e126e81546}
 
-\begin{DoxyCompactList}\small\item\em The disconnect event handler delegate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Disconnect event handler. \end{DoxyCompactList}\item 
+\hypertarget{namespaceAsterion_a7857afea4386501bece91ccfcf0096fc}{delegate void \hyperlink{namespaceAsterion_a7857afea4386501bece91ccfcf0096fc}{Timeout\-Event\-Handler} (Tcp\-Client timeout\-Connection, double time)}\label{namespaceAsterion_a7857afea4386501bece91ccfcf0096fc}
+
+\begin{DoxyCompactList}\small\item\em Timeout event handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
