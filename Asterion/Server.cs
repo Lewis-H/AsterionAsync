@@ -175,7 +175,10 @@ namespace Asterion {
             try {
                 connection.Bytes = new byte[1024];
                 lock(connection.SyncRoot)
-                    if(connection.Connected) connection.Client.GetStream().BeginRead(connection.Bytes, 0, 1024, ReceiveCallback, connection);
+                    if(connection.Connected)
+                        connection.Client.GetStream().BeginRead(connection.Bytes, 0, 1024, ReceiveCallback, connection);
+                    else
+                        DisconnectHandler(connection);
             }catch(System.IO.IOException) {
                 DisconnectHandler(connection);
             }
@@ -207,6 +210,7 @@ namespace Asterion {
                 CheckStopwatch(connection);
                 CheckBufferSize(connection);
                 if(connection.Timer.Interval != timeout) connection.Timer.Interval = timeout;
+                connection.Timer.Restart();
                 BeginRead(connection);
             }else{
                 DisconnectHandler(connection);
@@ -242,6 +246,7 @@ namespace Asterion {
         private void DisconnectHandler(Connection connection) {
             Interlocked.Decrement(ref clients);
             Limits.IpTable.Remove(connection);
+            connection.Timer.Stop();
             connection.Timer.Close();
             OnDisconnect(connection);
             connection.Client.Close();
