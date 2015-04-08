@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['writedata',['WriteData',['../classAsterion_1_1Server.html#aa48dd9fb3a96b9ecc407bc435af6263e',1,'Asterion.Server.WriteData(TcpClient connection, string sendData, bool isAsync)'],['../classAsterion_1_1Server.html#a99c1d00c261003225e3033eed7c95ab4',1,'Asterion.Server.WriteData(TcpClient writeConnection, string sendData)']]]
+  ['writedata',['WriteData',['../classAsterion_1_1Server.html#a4ef3faf86490903900d8fcfae8c3a8d6',1,'Asterion.Server.WriteData(Connection connection, string data, bool isAsync)'],['../classAsterion_1_1Server.html#a719820cb2208a9fa1a14d839f84fd079',1,'Asterion.Server.WriteData(Connection connection, string data)']]]
 ];

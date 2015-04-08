@@ -4,13 +4,16 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classAsterion_1_1Server_a726376e4ce463d092a5d4abdd3a0c617}{Start} (string host, int port, int capacity=0)
+\hyperlink{classAsterion_1_1Server_a6d13f25cb5a0e611c75bafa974c04787}{Server} (string host, int port, int capacity=0, int max\-Buffer\-Age=0, int timeout=0, int max\-Buffer\-Size=0, int ip\-Limit=5)
 \item 
-bool \hyperlink{classAsterion_1_1Server_aa48dd9fb3a96b9ecc407bc435af6263e}{Write\-Data} (Tcp\-Client connection, string send\-Data, bool is\-Async)
+\hypertarget{classAsterion_1_1Server_a8a97cfc8342f434e10ee72fd451e7905}{void {\bfseries Start} ()}\label{classAsterion_1_1Server_a8a97cfc8342f434e10ee72fd451e7905}
+
 \item 
-bool \hyperlink{classAsterion_1_1Server_a99c1d00c261003225e3033eed7c95ab4}{Write\-Data} (Tcp\-Client write\-Connection, string send\-Data)
+bool \hyperlink{classAsterion_1_1Server_a4ef3faf86490903900d8fcfae8c3a8d6}{Write\-Data} (\hyperlink{classAsterion_1_1Connection}{Connection} connection, string data, bool is\-Async)
 \item 
-void \hyperlink{classAsterion_1_1Server_a8f6acbef91dc68fa441b0f8746f8acd4}{Disconnect\-Client} (Tcp\-Client disconnect\-Connection)
+bool \hyperlink{classAsterion_1_1Server_a719820cb2208a9fa1a14d839f84fd079}{Write\-Data} (\hyperlink{classAsterion_1_1Connection}{Connection} connection, string data)
+\item 
+void \hyperlink{classAsterion_1_1Server_a2f9c1b938dc5e9cce3dcebc9223ea544}{Disconnect\-Client} (\hyperlink{classAsterion_1_1Connection}{Connection} connection)
 \item 
 void \hyperlink{classAsterion_1_1Server_a8d2ad7f8335488263e986db82c64e3eb}{On\-Log} (string text, \hyperlink{namespaceAsterion_1_1Logging_afaaa8cc38da45118ed4f5c2064c2a28c}{Logging.\-Log\-Level} level)
 \item 
@@ -28,40 +31,37 @@ void \hyperlink{classAsterion_1_1Server_a0e4c8d85fb7a4641250516fee636dfee}{On\-L
 \hypertarget{classAsterion_1_1Server_a755310aa1fb3da30e61963d3d60cb606}{int \hyperlink{classAsterion_1_1Server_a755310aa1fb3da30e61963d3d60cb606}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{classAsterion_1_1Server_a755310aa1fb3da30e61963d3d60cb606}
 
 \begin{DoxyCompactList}\small\item\em Gets the amount of clients currently connected to the server. \end{DoxyCompactList}\item 
-\hypertarget{classAsterion_1_1Server_adcdc6536b6eeaa3e4f7618775446a8f4}{int \hyperlink{classAsterion_1_1Server_adcdc6536b6eeaa3e4f7618775446a8f4}{Capacity}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classAsterion_1_1Server_adcdc6536b6eeaa3e4f7618775446a8f4}
+\hypertarget{classAsterion_1_1Server_adcdc6536b6eeaa3e4f7618775446a8f4}{int \hyperlink{classAsterion_1_1Server_adcdc6536b6eeaa3e4f7618775446a8f4}{Capacity}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{classAsterion_1_1Server_adcdc6536b6eeaa3e4f7618775446a8f4}
 
 \begin{DoxyCompactList}\small\item\em Sets the maximum amount of clients allowed on the server. \end{DoxyCompactList}\item 
-\hypertarget{classAsterion_1_1Server_a196c0514744f4e6a88ed5081d55709e7}{string \hyperlink{classAsterion_1_1Server_a196c0514744f4e6a88ed5081d55709e7}{Delimiter}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classAsterion_1_1Server_a196c0514744f4e6a88ed5081d55709e7}
-
-\begin{DoxyCompactList}\small\item\em Gets or sets the delimiter string. \end{DoxyCompactList}\item 
 \hypertarget{classAsterion_1_1Server_ac2ff4d6107ed236a3db7ce68d0a7c81a}{int \hyperlink{classAsterion_1_1Server_ac2ff4d6107ed236a3db7ce68d0a7c81a}{Ip\-Limit}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classAsterion_1_1Server_ac2ff4d6107ed236a3db7ce68d0a7c81a}
 
 \begin{DoxyCompactList}\small\item\em Gets or sets the amount of times to which an ip address may be connected to the server. \end{DoxyCompactList}\item 
-\hypertarget{classAsterion_1_1Server_a17f872487518e6756d5b089dbcda7268}{double \hyperlink{classAsterion_1_1Server_a17f872487518e6756d5b089dbcda7268}{Timeout}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classAsterion_1_1Server_a17f872487518e6756d5b089dbcda7268}
+\hypertarget{classAsterion_1_1Server_a17f872487518e6756d5b089dbcda7268}{double \hyperlink{classAsterion_1_1Server_a17f872487518e6756d5b089dbcda7268}{Timeout}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{classAsterion_1_1Server_a17f872487518e6756d5b089dbcda7268}
 
 \begin{DoxyCompactList}\small\item\em Gets or sets the timeout time. \end{DoxyCompactList}\item 
-\hypertarget{classAsterion_1_1Server_ace4f1bb6b79712ee78198c187b6ead84}{int \hyperlink{classAsterion_1_1Server_ace4f1bb6b79712ee78198c187b6ead84}{Maximum\-Legal\-Buffer\-Age}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classAsterion_1_1Server_ace4f1bb6b79712ee78198c187b6ead84}
+\hypertarget{classAsterion_1_1Server_ace4f1bb6b79712ee78198c187b6ead84}{int \hyperlink{classAsterion_1_1Server_ace4f1bb6b79712ee78198c187b6ead84}{Maximum\-Legal\-Buffer\-Age}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{classAsterion_1_1Server_ace4f1bb6b79712ee78198c187b6ead84}
 
 \begin{DoxyCompactList}\small\item\em Gets or sets the maximum legal buffer age (in milliseconds). 0 is infinite. \end{DoxyCompactList}\item 
-\hypertarget{classAsterion_1_1Server_aadb0c4b83cd66978060719b3c9f9bd59}{int \hyperlink{classAsterion_1_1Server_aadb0c4b83cd66978060719b3c9f9bd59}{Maximum\-Legal\-Buffer\-Size}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classAsterion_1_1Server_aadb0c4b83cd66978060719b3c9f9bd59}
+\hypertarget{classAsterion_1_1Server_aadb0c4b83cd66978060719b3c9f9bd59}{int \hyperlink{classAsterion_1_1Server_aadb0c4b83cd66978060719b3c9f9bd59}{Maximum\-Legal\-Buffer\-Size}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{classAsterion_1_1Server_aadb0c4b83cd66978060719b3c9f9bd59}
 
 \begin{DoxyCompactList}\small\item\em Gets or sets the maximum legal buffer size (in bytes). 0 is infinite. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Events}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classAsterion_1_1Server_a86e70015d1cbdbb93aec3e752d6f457a}{\hyperlink{namespaceAsterion_a29f5d934388f3024f1acb2a76ca181d4}{Receive\-Event\-Handler} {\bfseries Receive\-Event}}\label{classAsterion_1_1Server_a86e70015d1cbdbb93aec3e752d6f457a}
+\hypertarget{classAsterion_1_1Server_a86e70015d1cbdbb93aec3e752d6f457a}{\hyperlink{namespaceAsterion_a5ef58966894a2b631dc841b7cdd1a5e2}{Receive\-Event\-Handler} {\bfseries Receive\-Event}}\label{classAsterion_1_1Server_a86e70015d1cbdbb93aec3e752d6f457a}
 
 \item 
-\hypertarget{classAsterion_1_1Server_a0756512539b44fc1a57b6dac1bdca1be}{\hyperlink{namespaceAsterion_a4eb424f673809e9b97a563ddd0f4db12}{Connect\-Event\-Handler} {\bfseries Connect\-Event}}\label{classAsterion_1_1Server_a0756512539b44fc1a57b6dac1bdca1be}
+\hypertarget{classAsterion_1_1Server_a0756512539b44fc1a57b6dac1bdca1be}{\hyperlink{namespaceAsterion_aa915f460db30cba69c8c917d94da98e8}{Connect\-Event\-Handler} {\bfseries Connect\-Event}}\label{classAsterion_1_1Server_a0756512539b44fc1a57b6dac1bdca1be}
 
 \item 
-\hypertarget{classAsterion_1_1Server_a9a39e5289a373e7f5d727cad96f69a0a}{\hyperlink{namespaceAsterion_a52e1669733e14e0bf24951e126e81546}{Disconnect\-Event\-Handler} {\bfseries Disconnect\-Event}}\label{classAsterion_1_1Server_a9a39e5289a373e7f5d727cad96f69a0a}
+\hypertarget{classAsterion_1_1Server_a9a39e5289a373e7f5d727cad96f69a0a}{\hyperlink{namespaceAsterion_a96f853b30e28b18bf4afa727d5f144e0}{Disconnect\-Event\-Handler} {\bfseries Disconnect\-Event}}\label{classAsterion_1_1Server_a9a39e5289a373e7f5d727cad96f69a0a}
 
 \item 
 \hypertarget{classAsterion_1_1Server_aa8099aa7ba7bcc1c4b5519ca9cf9c549}{\hyperlink{namespaceAsterion_1_1Logging_afaa8d5b6776c6635522846d7f2751ca9}{Logging.\-Log\-Event\-Handler} {\bfseries Log\-Event}}\label{classAsterion_1_1Server_aa8099aa7ba7bcc1c4b5519ca9cf9c549}
 
 \item 
-\hypertarget{classAsterion_1_1Server_ae7e3538c394854a30299f7c2205ba825}{\hyperlink{namespaceAsterion_a7857afea4386501bece91ccfcf0096fc}{Timeout\-Event\-Handler} {\bfseries Timeout\-Event}}\label{classAsterion_1_1Server_ae7e3538c394854a30299f7c2205ba825}
+\hypertarget{classAsterion_1_1Server_ae7e3538c394854a30299f7c2205ba825}{\hyperlink{namespaceAsterion_a5083085ed7d41e00c1ecce1efcd5a096}{Timeout\-Event\-Handler} {\bfseries Timeout\-Event}}\label{classAsterion_1_1Server_ae7e3538c394854a30299f7c2205ba825}
 
 \end{DoxyCompactItemize}
 
@@ -69,14 +69,37 @@ void \hyperlink{classAsterion_1_1Server_a0e4c8d85fb7a4641250516fee636dfee}{On\-L
 \subsection{Detailed Description}
 Implements a Transmission Control Protocol (T\-C\-P) server. 
 
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classAsterion_1_1Server_a6d13f25cb5a0e611c75bafa974c04787}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Server@{Server}}
+\index{Server@{Server}!Asterion::Server@{Asterion\-::\-Server}}
+\subsubsection[{Server}]{\setlength{\rightskip}{0pt plus 5cm}Asterion.\-Server.\-Server (
+\begin{DoxyParamCaption}
+\item[{string}]{host, }
+\item[{int}]{port, }
+\item[{int}]{capacity = {\ttfamily 0}, }
+\item[{int}]{max\-Buffer\-Age = {\ttfamily 0}, }
+\item[{int}]{timeout = {\ttfamily 0}, }
+\item[{int}]{max\-Buffer\-Size = {\ttfamily 0}, }
+\item[{int}]{ip\-Limit = {\ttfamily 5}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a6d13f25cb5a0e611c75bafa974c04787}
+Starts up the server.
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\-Port} & The port to listen to for new connections. \\
+\hline
+\end{DoxyParams}
+
+
 \subsection{Member Function Documentation}
-\hypertarget{classAsterion_1_1Server_a8f6acbef91dc68fa441b0f8746f8acd4}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Disconnect\-Client@{Disconnect\-Client}}
+\hypertarget{classAsterion_1_1Server_a2f9c1b938dc5e9cce3dcebc9223ea544}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Disconnect\-Client@{Disconnect\-Client}}
 \index{Disconnect\-Client@{Disconnect\-Client}!Asterion::Server@{Asterion\-::\-Server}}
 \subsubsection[{Disconnect\-Client}]{\setlength{\rightskip}{0pt plus 5cm}void Asterion.\-Server.\-Disconnect\-Client (
 \begin{DoxyParamCaption}
-\item[{Tcp\-Client}]{disconnect\-Connection}
+\item[{{\bf Connection}}]{connection}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a8f6acbef91dc68fa441b0f8746f8acd4}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a2f9c1b938dc5e9cce3dcebc9223ea544}
 Kicks a client off the server (Might leave the client with a sore butt).
 
 
@@ -115,31 +138,15 @@ Raises the log event.
 {\em text} & The text to log. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classAsterion_1_1Server_a726376e4ce463d092a5d4abdd3a0c617}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Start@{Start}}
-\index{Start@{Start}!Asterion::Server@{Asterion\-::\-Server}}
-\subsubsection[{Start}]{\setlength{\rightskip}{0pt plus 5cm}void Asterion.\-Server.\-Start (
-\begin{DoxyParamCaption}
-\item[{string}]{host, }
-\item[{int}]{port, }
-\item[{int}]{capacity = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a726376e4ce463d092a5d4abdd3a0c617}
-Starts up the server.
-
-
-\begin{DoxyParams}{Parameters}
-{\em start\-Port} & The port to listen to for new connections. \\
-\hline
-\end{DoxyParams}
-\hypertarget{classAsterion_1_1Server_aa48dd9fb3a96b9ecc407bc435af6263e}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Write\-Data@{Write\-Data}}
+\hypertarget{classAsterion_1_1Server_a4ef3faf86490903900d8fcfae8c3a8d6}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Write\-Data@{Write\-Data}}
 \index{Write\-Data@{Write\-Data}!Asterion::Server@{Asterion\-::\-Server}}
 \subsubsection[{Write\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool Asterion.\-Server.\-Write\-Data (
 \begin{DoxyParamCaption}
-\item[{Tcp\-Client}]{connection, }
-\item[{string}]{send\-Data, }
+\item[{{\bf Connection}}]{connection, }
+\item[{string}]{data, }
 \item[{bool}]{is\-Async}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_aa48dd9fb3a96b9ecc407bc435af6263e}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a4ef3faf86490903900d8fcfae8c3a8d6}
 Writes data to a client.
 
 
@@ -151,14 +158,14 @@ Writes data to a client.
 {\em is\-Async} & Whether the action is asynchronous or not. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classAsterion_1_1Server_a99c1d00c261003225e3033eed7c95ab4}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Write\-Data@{Write\-Data}}
+\hypertarget{classAsterion_1_1Server_a719820cb2208a9fa1a14d839f84fd079}{\index{Asterion\-::\-Server@{Asterion\-::\-Server}!Write\-Data@{Write\-Data}}
 \index{Write\-Data@{Write\-Data}!Asterion::Server@{Asterion\-::\-Server}}
 \subsubsection[{Write\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool Asterion.\-Server.\-Write\-Data (
 \begin{DoxyParamCaption}
-\item[{Tcp\-Client}]{write\-Connection, }
-\item[{string}]{send\-Data}
+\item[{{\bf Connection}}]{connection, }
+\item[{string}]{data}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a99c1d00c261003225e3033eed7c95ab4}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAsterion_1_1Server_a719820cb2208a9fa1a14d839f84fd079}
 Writes data to a client with default options (asynchronous).
 
 
@@ -172,4 +179,4 @@ Writes data to a client with default options (asynchronous).
 
 The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-src/Server.\-cs\end{DoxyCompactItemize}
+Asterion/Server.\-cs\end{DoxyCompactItemize}

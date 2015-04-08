@@ -98,10 +98,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a726376e4ce463d092a5d4abdd3a0c617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a726376e4ce463d092a5d4abdd3a0c617">Start</a> (string host, int port, int capacity=0)</td></tr>
-<tr class="memitem:aa48dd9fb3a96b9ecc407bc435af6263e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#aa48dd9fb3a96b9ecc407bc435af6263e">WriteData</a> (TcpClient connection, string sendData, bool isAsync)</td></tr>
-<tr class="memitem:a99c1d00c261003225e3033eed7c95ab4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a99c1d00c261003225e3033eed7c95ab4">WriteData</a> (TcpClient writeConnection, string sendData)</td></tr>
-<tr class="memitem:a8f6acbef91dc68fa441b0f8746f8acd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a8f6acbef91dc68fa441b0f8746f8acd4">DisconnectClient</a> (TcpClient disconnectConnection)</td></tr>
+<tr class="memitem:a6d13f25cb5a0e611c75bafa974c04787"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a6d13f25cb5a0e611c75bafa974c04787">Server</a> (string host, int port, int capacity=0, int maxBufferAge=0, int timeout=0, int maxBufferSize=0, int ipLimit=5)</td></tr>
+<tr class="memitem:a8a97cfc8342f434e10ee72fd451e7905"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a97cfc8342f434e10ee72fd451e7905"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
+<tr class="memitem:a4ef3faf86490903900d8fcfae8c3a8d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a4ef3faf86490903900d8fcfae8c3a8d6">WriteData</a> (<a class="el" href="classAsterion_1_1Connection.html">Connection</a> connection, string data, bool isAsync)</td></tr>
+<tr class="memitem:a719820cb2208a9fa1a14d839f84fd079"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a719820cb2208a9fa1a14d839f84fd079">WriteData</a> (<a class="el" href="classAsterion_1_1Connection.html">Connection</a> connection, string data)</td></tr>
+<tr class="memitem:a2f9c1b938dc5e9cce3dcebc9223ea544"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a2f9c1b938dc5e9cce3dcebc9223ea544">DisconnectClient</a> (<a class="el" href="classAsterion_1_1Connection.html">Connection</a> connection)</td></tr>
 <tr class="memitem:a8d2ad7f8335488263e986db82c64e3eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a8d2ad7f8335488263e986db82c64e3eb">OnLog</a> (string text, <a class="el" href="namespaceAsterion_1_1Logging.html#afaaa8cc38da45118ed4f5c2064c2a28c">Logging.LogLevel</a> level)</td></tr>
 <tr class="memitem:a0e4c8d85fb7a4641250516fee636dfee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a0e4c8d85fb7a4641250516fee636dfee">OnLog</a> (string text)</td></tr>
 </table><table class="memberdecls">
@@ -117,41 +119,110 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a755310aa1fb3da30e61963d3d60cb606">Count</a><code> [get]</code></td></tr>
 <tr class="memdesc:a755310aa1fb3da30e61963d3d60cb606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the amount of clients currently connected to the server. <br/></td></tr>
 <tr class="memitem:adcdc6536b6eeaa3e4f7618775446a8f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcdc6536b6eeaa3e4f7618775446a8f4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#adcdc6536b6eeaa3e4f7618775446a8f4">Capacity</a><code> [get, set]</code></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#adcdc6536b6eeaa3e4f7618775446a8f4">Capacity</a><code> [get]</code></td></tr>
 <tr class="memdesc:adcdc6536b6eeaa3e4f7618775446a8f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum amount of clients allowed on the server. <br/></td></tr>
-<tr class="memitem:a196c0514744f4e6a88ed5081d55709e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a196c0514744f4e6a88ed5081d55709e7"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a196c0514744f4e6a88ed5081d55709e7">Delimiter</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a196c0514744f4e6a88ed5081d55709e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the delimiter string. <br/></td></tr>
 <tr class="memitem:ac2ff4d6107ed236a3db7ce68d0a7c81a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2ff4d6107ed236a3db7ce68d0a7c81a"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#ac2ff4d6107ed236a3db7ce68d0a7c81a">IpLimit</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:ac2ff4d6107ed236a3db7ce68d0a7c81a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the amount of times to which an ip address may be connected to the server. <br/></td></tr>
 <tr class="memitem:a17f872487518e6756d5b089dbcda7268"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17f872487518e6756d5b089dbcda7268"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a17f872487518e6756d5b089dbcda7268">Timeout</a><code> [get, set]</code></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#a17f872487518e6756d5b089dbcda7268">Timeout</a><code> [get]</code></td></tr>
 <tr class="memdesc:a17f872487518e6756d5b089dbcda7268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the timeout time. <br/></td></tr>
 <tr class="memitem:ace4f1bb6b79712ee78198c187b6ead84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace4f1bb6b79712ee78198c187b6ead84"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#ace4f1bb6b79712ee78198c187b6ead84">MaximumLegalBufferAge</a><code> [get, set]</code></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#ace4f1bb6b79712ee78198c187b6ead84">MaximumLegalBufferAge</a><code> [get]</code></td></tr>
 <tr class="memdesc:ace4f1bb6b79712ee78198c187b6ead84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the maximum legal buffer age (in milliseconds). 0 is infinite. <br/></td></tr>
 <tr class="memitem:aadb0c4b83cd66978060719b3c9f9bd59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadb0c4b83cd66978060719b3c9f9bd59"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#aadb0c4b83cd66978060719b3c9f9bd59">MaximumLegalBufferSize</a><code> [get, set]</code></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsterion_1_1Server.html#aadb0c4b83cd66978060719b3c9f9bd59">MaximumLegalBufferSize</a><code> [get]</code></td></tr>
 <tr class="memdesc:aadb0c4b83cd66978060719b3c9f9bd59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the maximum legal buffer size (in bytes). 0 is infinite. <br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="events"></a>
 Events</h2></td></tr>
 <tr class="memitem:a86e70015d1cbdbb93aec3e752d6f457a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86e70015d1cbdbb93aec3e752d6f457a"></a>
-<a class="el" href="namespaceAsterion.html#a29f5d934388f3024f1acb2a76ca181d4">ReceiveEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ReceiveEvent</b></td></tr>
+<a class="el" href="namespaceAsterion.html#a5ef58966894a2b631dc841b7cdd1a5e2">ReceiveEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ReceiveEvent</b></td></tr>
 <tr class="memitem:a0756512539b44fc1a57b6dac1bdca1be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0756512539b44fc1a57b6dac1bdca1be"></a>
-<a class="el" href="namespaceAsterion.html#a4eb424f673809e9b97a563ddd0f4db12">ConnectEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectEvent</b></td></tr>
+<a class="el" href="namespaceAsterion.html#aa915f460db30cba69c8c917d94da98e8">ConnectEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectEvent</b></td></tr>
 <tr class="memitem:a9a39e5289a373e7f5d727cad96f69a0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a39e5289a373e7f5d727cad96f69a0a"></a>
-<a class="el" href="namespaceAsterion.html#a52e1669733e14e0bf24951e126e81546">DisconnectEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DisconnectEvent</b></td></tr>
+<a class="el" href="namespaceAsterion.html#a96f853b30e28b18bf4afa727d5f144e0">DisconnectEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DisconnectEvent</b></td></tr>
 <tr class="memitem:aa8099aa7ba7bcc1c4b5519ca9cf9c549"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8099aa7ba7bcc1c4b5519ca9cf9c549"></a>
 <a class="el" href="namespaceAsterion_1_1Logging.html#afaa8d5b6776c6635522846d7f2751ca9">Logging.LogEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>LogEvent</b></td></tr>
 <tr class="memitem:ae7e3538c394854a30299f7c2205ba825"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7e3538c394854a30299f7c2205ba825"></a>
-<a class="el" href="namespaceAsterion.html#a7857afea4386501bece91ccfcf0096fc">TimeoutEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>TimeoutEvent</b></td></tr>
+<a class="el" href="namespaceAsterion.html#a5083085ed7d41e00c1ecce1efcd5a096">TimeoutEventHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><b>TimeoutEvent</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Implements a Transmission Control Protocol (TCP) server. </p>
-</div><h2>Member Function Documentation</h2>
-<a class="anchor" id="a8f6acbef91dc68fa441b0f8746f8acd4"></a>
+</div><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6d13f25cb5a0e611c75bafa974c04787"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Asterion.Server.Server </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>capacity</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxBufferAge</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxBufferSize</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ipLimit</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Starts up the server.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startPort</td><td>The port to listen to for new connections. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2>Member Function Documentation</h2>
+<a class="anchor" id="a2f9c1b938dc5e9cce3dcebc9223ea544"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -161,8 +232,8 @@ Events</h2></td></tr>
         <tr>
           <td class="memname">void Asterion.Server.DisconnectClient </td>
           <td>(</td>
-          <td class="paramtype">TcpClient&#160;</td>
-          <td class="paramname"><em>disconnectConnection</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsterion_1_1Connection.html">Connection</a>&#160;</td>
+          <td class="paramname"><em>connection</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -255,54 +326,7 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a726376e4ce463d092a5d4abdd3a0c617"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Asterion.Server.Start </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>host</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>port</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>capacity</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Starts up the server.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">startPort</td><td>The port to listen to for new connections. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="aa48dd9fb3a96b9ecc407bc435af6263e"></a>
+<a class="anchor" id="a4ef3faf86490903900d8fcfae8c3a8d6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -312,14 +336,14 @@ Events</h2></td></tr>
         <tr>
           <td class="memname">bool Asterion.Server.WriteData </td>
           <td>(</td>
-          <td class="paramtype">TcpClient&#160;</td>
+          <td class="paramtype"><a class="el" href="classAsterion_1_1Connection.html">Connection</a>&#160;</td>
           <td class="paramname"><em>connection</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>sendData</em>, </td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -351,7 +375,7 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a99c1d00c261003225e3033eed7c95ab4"></a>
+<a class="anchor" id="a719820cb2208a9fa1a14d839f84fd079"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -361,14 +385,14 @@ Events</h2></td></tr>
         <tr>
           <td class="memname">bool Asterion.Server.WriteData </td>
           <td>(</td>
-          <td class="paramtype">TcpClient&#160;</td>
-          <td class="paramname"><em>writeConnection</em>, </td>
+          <td class="paramtype"><a class="el" href="classAsterion_1_1Connection.html">Connection</a>&#160;</td>
+          <td class="paramname"><em>connection</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>sendData</em>&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -394,12 +418,12 @@ Events</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/Server.cs</li>
+<li>Asterion/Server.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 2 2015 16:30:17 for Asterion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 8 2015 22:41:31 for Asterion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
