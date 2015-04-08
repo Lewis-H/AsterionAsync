@@ -98,13 +98,13 @@ namespace Asterion {
             this.port = port;
             if(capacity != 0) this.capacity = capacity;
             listener = new TcpListener(System.Net.IPAddress.Parse(host), port);
-            InitialiseAccept();
+            StartAccept();
         }
 
         /**
          * Starts accepting connecting clients.
          */
-        private void InitialiseAccept() {
+        private void StartAccept() {
             listener.Start();
             OnLog("Awaiting connections...");
             ManualResetEvent wait = new ManualResetEvent(false);
@@ -124,8 +124,11 @@ namespace Asterion {
          */
         private void AcceptCallback(System.IAsyncResult result) {
             ManualResetEvent wait = (ManualResetEvent) result.AsyncState;
+            bool reset = false;
             try {
                 TcpClient client = listener.EndAcceptTcpClient(result);
+                wait.Set();
+                reset = true;
                 client.Client.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.KeepAlive, 1);
                 AddClient(client);
             }catch(System.Net.Sockets.SocketException ex) {
@@ -136,7 +139,7 @@ namespace Asterion {
                 OnLog("Could not add client: " + ex.Message, Logging.LogLevel.Error);
                 DisconnectClient(ex.Client);                
             }finally{
-                wait.Set();
+                if(!reset) wait.Set();
             }
         }        
 
