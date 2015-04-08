@@ -175,7 +175,7 @@ namespace Asterion {
             try {
                 connection.Bytes = new byte[1024];
                 lock(connection.SyncRoot)
-                    if(connection.Client != null) connection.Client.GetStream().BeginRead(connection.Bytes, 0, 1024, ReceiveCallback, connection);
+                    if(connection.Connected) connection.Client.GetStream().BeginRead(connection.Bytes, 0, 1024, ReceiveCallback, connection);
             }catch(System.IO.IOException) {
                 DisconnectHandler(connection);
             }
@@ -193,7 +193,7 @@ namespace Asterion {
             bool connected = false;
             int available = 0;
             lock(connection.SyncRoot)
-                if(connection.Client != null) {
+                if(connection.Connected) {
                     read = EndRead(connection, result);
                     connected = connection.Client.Connected;
                     available = connection.Client.Available;
@@ -224,7 +224,7 @@ namespace Asterion {
         private int EndRead(Connection connection, System.IAsyncResult result) {
             try {
                 lock(connection.SyncRoot)
-                    if(connection.Client != null)
+                    if(connection.Connected)
                         return connection.Client.GetStream().EndRead(result);
                     else
                         return 0;
@@ -300,7 +300,7 @@ namespace Asterion {
             Connection connection = (Connection) result.AsyncState;
             try {
                 lock(connection.SyncRoot)
-                    if(connection.Client != null) {
+                    if(connection.Connected) {
                         connection.Client.GetStream().EndWrite(result);
                         connection.Client.LingerState = new LingerOption(false, 0);
                     }
@@ -318,7 +318,7 @@ namespace Asterion {
         public void DisconnectClient(Connection connection) {
             try {
                 lock(connection.SyncRoot)
-                    if(connection.Client != null) {
+                    if(connection.Connected) {
                         connection.Client.Client.Shutdown(System.Net.Sockets.SocketShutdown.Both);
                         connection.Client.Close();
                     }
