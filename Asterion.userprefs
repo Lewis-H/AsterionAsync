@@ -1,1 +1,12 @@
-﻿<Properties StartupItem="Asterion/Asterion.csproj" />
+﻿<Properties StartupItem="Asterion/Asterion.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Asterion/Connection.cs">
+    <Files>
+      <File FileName="Asterion/Connection.cs" Line="5" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,11 +1,10 @@
 namespace Asterion.Exceptions {
-    using TcpClient = System.Net.Sockets.TcpClient;
     /**
-     * Thrown when we cannot get a client's address.
+     * Thrown when we cannot get a connection's address.
      */
      public class UnavailableEndPointException : AsterionException {        
-        public UnavailableEndPointException(TcpClient client) : base(client) { }
-        public UnavailableEndPointException(string exceptionMessage, TcpClient client) : base(exceptionMessage, client) { }
-        public UnavailableEndPointException(string exceptionMessage, UnavailableEndPointException innerException, TcpClient client) : base(exceptionMessage, innerException, client) { }
+        public UnavailableEndPointException(Connection connection) : base(connection) { }
+        public UnavailableEndPointException(string exceptionMessage, Connection connection) : base(exceptionMessage, connection) { }
+        public UnavailableEndPointException(string exceptionMessage, UnavailableEndPointException innerException, Connection connection) : base(exceptionMessage, innerException, connection) { }
     }
 }

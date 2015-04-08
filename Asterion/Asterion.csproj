@@ -47,9 +47,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="Doxyfile" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Exceptions\" />
     <Folder Include="Limits\" />
     <Folder Include="Logging\" />

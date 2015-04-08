@@ -7,8 +7,8 @@ namespace Asterion.Limits {
             get { return tag; }
         }
     
-        public TimeoutTimer(object timerTag) : base() {
-            tag = timerTag;
+        public TimeoutTimer(object tag) : base() {
+            this.tag = tag;
         }
         
         public void Restart() {
