@@ -1,0 +1,5 @@
+/home/lewis/Asterion/Asterion/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/lewis/Asterion/Asterion/bin/Debug/Asterion.dll.mdb
+/home/lewis/Asterion/Asterion/bin/Debug/Asterion.dll
+/home/lewis/Asterion/Asterion/obj/Debug/Asterion.dll
+/home/lewis/Asterion/Asterion/obj/Debug/Asterion.dll.mdb
