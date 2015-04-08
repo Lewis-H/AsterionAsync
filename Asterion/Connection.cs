@@ -15,6 +15,7 @@ namespace Asterion {
     public class Connection {
         private Limits.TimeoutTimer timer;
         private Diagnostics.Stopwatch watch = new Diagnostics.Stopwatch();
+        internal readonly object SyncRoot = new object();
         private TcpClient client;
 
         /// <summary>
@@ -54,7 +55,10 @@ namespace Asterion {
         }
 
         public bool Connected {
-            get { return Client.Connected; }
+            get { 
+                lock(SyncRoot)
+                    return (Client != null && Client.Connected);
+            }
         }
 
         public object Tag {

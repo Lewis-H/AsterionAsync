@@ -174,9 +174,9 @@ namespace Asterion {
         private void BeginRead(Connection connection) {
             try {
                 connection.Bytes = new byte[1024];
-                connection.Client.GetStream().BeginRead(connection.Bytes, 0, 1024, ReceiveCallback, connection);
-            }catch(System.SystemException ex) {
-                if(ex is System.IO.IOException == false && ex is System.ObjectDisposedException == false) throw;
+                lock(connection.SyncRoot)
+                    if(connection.Client != null) connection.Client.GetStream().BeginRead(connection.Bytes, 0, 1024, ReceiveCallback, connection);
+            }catch(System.IO.IOException) {
                 DisconnectHandler(connection);
             }
         }
@@ -189,10 +189,18 @@ namespace Asterion {
          */ 
         private void ReceiveCallback(System.IAsyncResult result) {
             Connection connection = (Connection) result.AsyncState;
-            int read = EndRead(connection, result);
-            if(read != 0 && connection.Connected) {
+            int read = 0;
+            bool connected = false;
+            int available = 0;
+            lock(connection.SyncRoot)
+                if(connection.Client != null) {
+                    read = EndRead(connection, result);
+                    connected = connection.Client.Connected;
+                    available = connection.Client.Available;
+                }
+            if(read != 0 && connected) {
                 connection.Buffer += System.Text.Encoding.ASCII.GetString(connection.Bytes).Substring(0, read);
-                if(read != 1024 && connection.Client.Available == 0) {
+                if(read != 1024 && available == 0) {
                     OnReceive(connection, connection.Buffer);
                     connection.Buffer = "";
                 }
@@ -215,9 +223,12 @@ namespace Asterion {
          */
         private int EndRead(Connection connection, System.IAsyncResult result) {
             try {
-                return connection.Client.GetStream().EndRead(result);
-            }catch(System.Exception ex) {
-                if(ex is System.IO.IOException == false && ex is System.ObjectDisposedException == false) throw;
+                lock(connection.SyncRoot)
+                    if(connection.Client != null)
+                        return connection.Client.GetStream().EndRead(result);
+                    else
+                        return 0;
+            }catch(System.IO.IOException) {
                 return 0;
             }
         }
@@ -249,14 +260,19 @@ namespace Asterion {
         public bool WriteData(Connection connection, string data, bool isAsync) {
             try {
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-                if(isAsync) {
-                    connection.Client.GetStream().BeginWrite(bytes, 0, data.Length, WriteCallback, connection);
-                }else{
-                    connection.Client.GetStream().Write(bytes, 0, data.Length);
+                lock(connection.SyncRoot) {
+                    if(connection != null) {
+                        if(isAsync) {
+                            connection.Client.GetStream().BeginWrite(bytes, 0, data.Length, WriteCallback, connection);
+                        }else{
+                            connection.Client.GetStream().Write(bytes, 0, data.Length);
+                        }
+                        return connection.Client.GetStream().CanWrite;
+                    }else{
+                        return false;
+                    }
                 }
-                return connection.Client.GetStream().CanWrite;
-            }catch(System.Exception ex) {
-                if(ex is System.IO.IOException == false && ex is System.ObjectDisposedException == false) throw;
+            }catch(System.IO.IOException ex) {
                 OnLog("Could not end write to client: " + ex.Message + ".", Logging.LogLevel.Error);
                 return false;
             }
@@ -283,10 +299,12 @@ namespace Asterion {
         private void WriteCallback(System.IAsyncResult result) {
             Connection connection = (Connection) result.AsyncState;
             try {
-                connection.Client.GetStream().EndWrite(result);
-                connection.Client.LingerState = new LingerOption(false, 0);
-            }catch(System.Exception ex) {
-                if(ex is System.IO.IOException == false && ex is System.ObjectDisposedException == false) throw;
+                lock(connection.SyncRoot)
+                    if(connection.Client != null) {
+                        connection.Client.GetStream().EndWrite(result);
+                        connection.Client.LingerState = new LingerOption(false, 0);
+                    }
+            }catch(System.IO.IOException ex) {
                 OnLog("Could not end write to client: " + ex.Message + ".", Logging.LogLevel.Error);
             }
         }
@@ -299,8 +317,11 @@ namespace Asterion {
          */
         public void DisconnectClient(Connection connection) {
             try {
-                connection.Client.Client.Shutdown(System.Net.Sockets.SocketShutdown.Both);
-                connection.Client.Close();
+                lock(connection.SyncRoot)
+                    if(connection.Client != null) {
+                        connection.Client.Client.Shutdown(System.Net.Sockets.SocketShutdown.Both);
+                        connection.Client.Close();
+                    }
             }catch(System.Exception e) {
                 OnLog("Could not disconnect socket: " + e.Message, Asterion.Logging.LogLevel.Error);
             }
