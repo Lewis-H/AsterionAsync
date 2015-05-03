@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Asterion")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("An asynchronous C# socket server.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("lewis")]
+[assembly: AssemblyCopyright("Lewis Hazell")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

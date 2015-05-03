@@ -1,8 +1,10 @@
 ﻿<Properties StartupItem="Asterion/Asterion.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Asterion/Connection.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Asterion/Server.cs">
     <Files>
-      <File FileName="Asterion/Connection.cs" Line="5" Column="5" />
+      <File FileName="Asterion/Connection.cs" Line="17" Column="17" />
+      <File FileName="Asterion/Server.cs" Line="44" Column="44" />
+      <File FileName="Asterion/Limits/IpTable.cs" Line="32" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

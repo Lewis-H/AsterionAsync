@@ -1,13 +1,3 @@
-/**
- * @file    Server
- * @author  Lewis
- * @url     https://github.com/Lewis-H
- * @license http://www.gnu.org/copyleft/lesser.html
- */
-
-/**
- * The Asterion namespace provides a simple to use TCP server base, which is extensible to function as many kinds of server applications.
- */
 namespace Asterion {
     using TcpClient = System.Net.Sockets.TcpClient;
     using TcpListener = System.Net.Sockets.TcpListener;
@@ -16,84 +6,134 @@ namespace Asterion {
     using ElapsedEventArgs = System.Timers.ElapsedEventArgs;
     using Interlocked = System.Threading.Interlocked;
     
-    //! Recieve event handler.
+    /// <summary>
+    /// Receive event handler.
+    /// </summary>
     public delegate void ReceiveEventHandler(Connection Client, string packet);
-    //! Connect event handler.
+    /// <summary>
+    /// Connect event handler.
+    /// </summary>
     public delegate void ConnectEventHandler(Connection Client);
-    //! Disconnect event handler.
+    /// <summary>
+    /// Disconnect event handler.
+    /// </summary>
     public delegate void DisconnectEventHandler(Connection Client);
-    //! Timeout event handler.
+    /// <summary>
+    /// Timeout event handler.
+    /// </summary>
     public delegate void TimeoutEventHandler(Connection timeoutConnection, double time);
 
-    /**
-     * Implements a Transmission Control Protocol (TCP) server.
-     */
+    /// <summary>
+    /// Implaments an asynchronous TCP server.
+    /// </summary>
     public class Server {
-        private TcpListener listener; //< Socket to which the server will listen to for new connections.
-        private string host; //< The host that the server will listen on.
-        private int port; //< The port that the server will listen on.
-        private int clients            = 0; //< The number of clients currently connected to the server.
-        private int capacity           = 0; //< The maximum amount of clients allowed on the server.
-        private int legalMaxBufferAge  = 0; //< The maximum legal time for a buffer since handling. The buffer will be cleared if over this age (0 is infinite).
-        private int legalMaxBufferSize = 0; //< The maximum legal size of a buffer yet to be handled. The buffer will be cleared if over this size (0 is infinite).
-        private double timeout = 0; //< Buffer timeout time.
+        /// <summary>
+        /// The listening socket.
+        /// </summary>
+        private TcpListener listener;
+        /// <summary>
+        /// The host the server will listen on.
+        /// </summary>
+        private string host;
+        /// <summary>
+        /// The port the server will listen on.
+        /// </summary>
+        private int port;
+        /// <summary>
+        /// The client count lock.
+        /// </summary>
+        private object clients_l = new object();
+        /// <summary>
+        /// The clients number of clients on the server.
+        /// </summary>
+        private volatile int clients    = 0;
+        /// <summary>
+        /// The maximum clients the server will hold.
+        /// </summary>
+        private int capacity   = 0;
+        /// <summary>
+        /// Client timeout. The maximum amount of time a client is permitted not to send data for.
+        /// </summary>
+        private double timeout = 0;
+        /// <summary>
+        /// Whether the server has been started.
+        /// </summary>
         private bool started = false;
-        public event ReceiveEventHandler ReceiveEvent; //< Event raised when a packet is recieved.
-        public event ConnectEventHandler ConnectEvent; //< Event raised when a new client has connected.
-        public event DisconnectEventHandler DisconnectEvent; //< Event raised when a client has disconnected.
-        public event Logging.LogEventHandler LogEvent; //< Event raised when the logger is being written to.
-        public event TimeoutEventHandler TimeoutEvent; //< Event raised when a client has timed out.
+        /// <summary>
+        /// Occurs when a packet has been received.
+        /// </summary>
+        public event ReceiveEventHandler OnReceive;
+        /// <summary>
+        /// Occurs when a client has connected.
+        /// </summary>
+        public event ConnectEventHandler OnConnect;
+        /// <summary>
+        /// Occurs when a client disconnects.
+        /// </summary>
+        public event DisconnectEventHandler OnDisconnect;
+        /// <summary>
+        /// Occurs when information is logged by the server.
+        /// </summary>
+        public event Logging.LogEventHandler OnLog;
+        /// <summary>
+        /// Occurs when a client times out.
+        /// </summary>
+        public event TimeoutEventHandler OnTimeout;
 
-        //! Gets the host which the server is listening on.
+        /// <summary>
+        /// Gets the host the server is listening in.
+        /// </summary>
+        /// <value>The host.</value>
         public string Host {
             get { return host; }
         }
-        //! Gets the port number which the server is listening to.
+        /// <summary>
+        /// Gets the port the server is listening on.
+        /// </summary>
+        /// <value>The port.</value>
         public int Port {
             get { return port; }
         }
-        //! Gets the amount of clients currently connected to the server.
+        /// <summary>
+        /// Gets the count of clients currently connected to the server.
+        /// </summary>
+        /// <value>The count.</value>
         public int Count {
             get { return clients; }
         }
-        //! Sets the maximum amount of clients allowed on the server.
+        /// <summary>
+        /// Gets the client capacity of the server.
+        /// </summary>
+        /// <value>The client capacity of the server.</value>
         public int Capacity {
             get { return capacity; }
         }
-        //! Gets or sets the amount of times to which an ip address may be connected to the server.
-        public int IpLimit {
-            get { return Limits.IpTable.Limit; }
-            set { Limits.IpTable.Limit = value; }
-        }
-        //! Gets or sets the timeout time.
+        /// <summary>
+        /// Gets the timeout time.
+        /// </summary>
+        /// <value>The timeout time.</value>
         public double Timeout {
             get { return timeout; }
         }
-        //! Gets or sets the maximum legal buffer age (in milliseconds). 0 is infinite.
-        public int MaximumLegalBufferAge {
-            get { return legalMaxBufferAge; }
-        }
-        //! Gets or sets the maximum legal buffer size (in bytes). 0 is infinite.
-        public int MaximumLegalBufferSize {
-            get { return legalMaxBufferSize; }
-        }
         
-        /**
-         * Starts up the server.
-         *
-         * @param startPort
-         *  The port to listen to for new connections.
-         */
-        public Server(string host, int port, int capacity = 0, int maxBufferAge = 0, int timeout = 0, int maxBufferSize = 0, int ipLimit = 5) {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Asterion.Server"/> class.
+        /// </summary>
+        /// <param name="host">Host to listen on.</param>
+        /// <param name="port">Port to listen on.</param>
+        /// <param name="capacity">Server capacity.</param>
+        /// <param name="timeout">Client timeout time.</param>
+        public Server(string host, int port, int capacity = 0, int timeout = 0) {
             this.host = host;
             this.port = port;
             this.timeout = timeout;
-            this.legalMaxBufferAge = maxBufferAge;
-            this.legalMaxBufferSize = maxBufferSize;
             if(capacity != 0) this.capacity = capacity;
             listener = new TcpListener(System.Net.IPAddress.Parse(host), port);
         }
 
+        /// <summary>
+        /// Starts the server.
+        /// </summary>
         public void Start() {
             if(!started) {
                 started = true;
@@ -101,76 +141,67 @@ namespace Asterion {
             }
         }
 
-        /**
-         * Starts accepting connecting clients.
-         */
+        /// <summary>
+        /// Listens for incoming connections.
+        /// </summary>
         private void Listen() {
             listener.Start();
-            OnLog("Awaiting connections...");
-            ManualResetEvent wait = new ManualResetEvent(false);
-            while(true) {
-                wait.Reset();
-                listener.BeginAcceptTcpClient(AcceptCallback, wait);
-                wait.WaitOne();
-            }
+            Log("Awaiting connections...");
+            listener.BeginAcceptTcpClient(AcceptCallback, null);
         }
 
 
-        /**
-         * The accept callback for when a client has connected, calls the onConnect event.
-         *
-         * @param result
-         *  The IAsyncResult returned from the asynchronous accept.
-         */
+        /// <summary>
+        /// Callback for an incoming connection
+        /// </summary>
+        /// <param name="result">Asynchronous result.</param>
         private void AcceptCallback(System.IAsyncResult result) {
-            ManualResetEvent wait = (ManualResetEvent) result.AsyncState;
-            bool reset = false;
+            bool accepting = false;
             try {
                 TcpClient client = listener.EndAcceptTcpClient(result);
-                wait.Set();
-                reset = true;
+                listener.BeginAcceptTcpClient(AcceptCallback, null);
+                accepting = true;
                 client.Client.SetSocketOption(System.Net.Sockets.SocketOptionLevel.Socket, System.Net.Sockets.SocketOptionName.KeepAlive, 1);
                 Heard(client);
             }catch(System.Net.Sockets.SocketException ex) {
                 // If this happens, socket error code information is at: http://msdn.microsoft.com/en-us/library/windows/desktop/ms740668(v=vs.85).aspx
-                OnLog("Could not accept socket [" + ex.ErrorCode + "]: " + ex.Message);
+                Log("Could not accept socket (" + ex.ErrorCode.ToString() + "): " + ex.Message, Logging.LogLevel.Error);
             }catch(Exceptions.AsterionException ex) {
                 // Either the server is full or the client has reached the maximum connections per IP.
-                OnLog("Could not add client: " + ex.Message, Logging.LogLevel.Error);
+                Log("Could not add client: " + ex.Message, Logging.LogLevel.Error);
                 DisconnectClient(ex.Connection);                
             }finally{
-                if(!reset) wait.Set();
+                if(!accepting) listener.BeginAcceptTcpClient(AcceptCallback, null);
             }
         }        
 
-        /**
-         * Handles a new client connecting to the server and starts reading from the client if the client limit has not been reached.
-         *
-         * @param client
-         *  The new client.
-         */
+
+        /// <summary>
+        /// Handles a new client connecting to the server and starts reading from the client.
+        /// </summary>
+        /// <param name="client">The new client.</param>
         private void Heard(TcpClient client) {
             Connection connection = new Connection {
                 Client = client,
             };
-            if(clients >= capacity && capacity != 0) throw new Exceptions.ServerFullException("Server full, rejecting client with IP '" + connection.Address + "'.", connection);
-            Interlocked.Increment(ref clients);
-            Limits.IpTable.Add(connection);
+            lock(clients_l) {
+                if(capacity != 0 && clients >= capacity)
+                    throw new Exceptions.ServerFullException("Server full, rejecting client with IP '" + connection.Address + "'.", connection);
+                clients++;
+            }
             if(timeout != 0) {
                 connection.Timer.Interval = timeout;
-                connection.Timer.Elapsed += OnTimeout;
+                connection.Timer.Elapsed += TimeoutEventHandler;
                 connection.Timer.Start();
             }
-            OnConnect(connection);
+            Connected(connection);
             BeginRead(connection);
         }
 
-        /**
-         * Begin reading from a connected client.
-         *
-         * @param readConnection
-         *  The Connection object of the client to read from.
-         */
+        /// <summary>
+        /// Begins reading from a connected client.
+        /// </summary>
+        /// <param name="connection">The connection to read from.</param>
         private void BeginRead(Connection connection) {
             try {
                 connection.Bytes = new byte[1024];
@@ -184,12 +215,10 @@ namespace Asterion {
             }
         }
 
-        /**
-         * The receive callback for when data has been received from a client, calls the onReceive event.
-         *
-         * @param result
-         *  The IAsyncResult returned from the asynchronous reading.
-         */ 
+        /// <summary>
+        /// Callback for received data.
+        /// </summary>
+        /// <param name="result">Asynchronous result.</param>
         private void ReceiveCallback(System.IAsyncResult result) {
             Connection connection = (Connection) result.AsyncState;
             int read = 0;
@@ -202,13 +231,11 @@ namespace Asterion {
                     available = connection.Client.Available;
                 }
             if(read != 0 && connected) {
-                connection.Buffer += System.Text.Encoding.ASCII.GetString(connection.Bytes).Substring(0, read);
+                connection.Buffer += System.Text.Encoding.UTF8.GetString(connection.Bytes).Substring(0, read);
                 if(read != 1024 && available == 0) {
-                    OnReceive(connection, connection.Buffer);
+                    Received(connection, connection.Buffer);
                     connection.Buffer = "";
                 }
-                CheckStopwatch(connection);
-                CheckBufferSize(connection);
                 if(connection.Timer.Interval != timeout) connection.Timer.Interval = timeout;
                 connection.Timer.Restart();
                 BeginRead(connection);
@@ -217,14 +244,12 @@ namespace Asterion {
             }
         }
 
-        /**
-         * End reading from a connected client.
-         *
-         * @param readConnection
-         *  The Connection object of the client to stop reading from.
-         * @param result
-         *  The IAsyncResult returned from the asynchronous reading.
-         */
+        /// <summary>
+        /// Ends reading from a client.
+        /// </summary>
+        /// <returns>The read.</returns>
+        /// <param name="connection">The connection to end reading from.</param>
+        /// <param name="result">Asynchronous result.</param>
         private int EndRead(Connection connection, System.IAsyncResult result) {
             try {
                 lock(connection.SyncRoot)
@@ -237,36 +262,30 @@ namespace Asterion {
             }
         }
 
-        /**
-         * Handles the disconnection of a client from the server, calls the onDisconnect event.
-         *
-         * @param disconnectConnection
-         *  The client that is disconnecting.
-         */
+        /// <summary>
+        /// Handles a client disconnect
+        /// </summary>
+        /// <param name="connection">Disconnected connection.</param>
         private void DisconnectHandler(Connection connection) {
-            Interlocked.Decrement(ref clients);
-            Limits.IpTable.Remove(connection);
+            lock(clients_l) clients--;
             connection.Timer.Stop();
+            Disconnected(connection);
             connection.Timer.Close();
-            OnDisconnect(connection);
             connection.Client.Close();
         }
 
-        /**
-         * Writes data to a client.
-         *
-         * @param writeConnection
-         *  The client to write data to.
-         * @param sendData
-         *  The data to send to the client.
-         * @param isAsync
-         *  Whether the action is asynchronous or not.
-         */
+        /// <summary>
+        /// Writes data to a client.
+        /// </summary>
+        /// <returns><c>true</c>, if data could be written, <c>false</c> otherwise.</returns>
+        /// <param name="connection">The connection to write to.</param>
+        /// <param name="data">The data to write.</param>
+        /// <param name="isAsync">If set to <c>true</c>, the write will be performed asynchronously.</param>
         public bool WriteData(Connection connection, string data, bool isAsync) {
             try {
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
                 lock(connection.SyncRoot) {
-                    if(connection != null) {
+                    if(connection.Connected) {
                         if(isAsync) {
                             connection.Client.GetStream().BeginWrite(bytes, 0, data.Length, WriteCallback, connection);
                         }else{
@@ -278,48 +297,43 @@ namespace Asterion {
                     }
                 }
             }catch(System.IO.IOException ex) {
-                OnLog("Could not end write to client: " + ex.Message + ".", Logging.LogLevel.Error);
+                Log("Could not write to client: " + ex.Message + ".", Logging.LogLevel.Error);
                 return false;
             }
         }
         
-        /**
-         * Writes data to a client with default options (asynchronous).
-         *
-         * @param writeConnection
-         *  The client to write data to.
-         * @param sendData
-         *  The data to send to the client.
-         */
+        /// <summary>
+        /// Writes data to a client.
+        /// </summary>
+        /// <returns><c>true</c>, if data could be written, <c>false</c> otherwise.</returns>
+        /// <param name="connection">The connection to write to.</param>
+        /// <param name="data">The data to write.</param>
         public bool WriteData(Connection connection, string data) {
             return WriteData(connection, data, true);
         }
 
-        /**
-         * The write calback for when data has been sent to a client.
-         *
-         * @param result
-         *  The IAsyncResult returned from the asynchronous writing.
-         */
+        /// <summary>
+        /// Callback handling data being written to a client.
+        /// </summary>
+        /// <param name="result">Result.</param>
         private void WriteCallback(System.IAsyncResult result) {
             Connection connection = (Connection) result.AsyncState;
             try {
-                lock(connection.SyncRoot)
+                lock(connection.SyncRoot) {
                     if(connection.Connected) {
                         connection.Client.GetStream().EndWrite(result);
                         connection.Client.LingerState = new LingerOption(false, 0);
                     }
+                }
             }catch(System.IO.IOException ex) {
-                OnLog("Could not end write to client: " + ex.Message + ".", Logging.LogLevel.Error);
+                Log("Could not end write to client: " + ex.Message + ".", Logging.LogLevel.Error);
             }
         }
 
-        /**
-         * Kicks a client off the server (Might leave the client with a sore butt).
-         *
-         * @param disconnectConnection
-         *  The connection to close.
-         */
+        /// <summary>
+        /// Disconnects the connection from the server.
+        /// </summary>
+        /// <param name="connection">The connection to disconnect.</param>
         public void DisconnectClient(Connection connection) {
             try {
                 lock(connection.SyncRoot)
@@ -328,115 +342,63 @@ namespace Asterion {
                         connection.Client.Close();
                     }
             }catch(System.Exception e) {
-                OnLog("Could not disconnect socket: " + e.Message, Asterion.Logging.LogLevel.Error);
+                Log("Could not disconnect socket: " + e.Message, Asterion.Logging.LogLevel.Error);
             }
         }
 
-        
-        /**
-         * Handles the size of the buffer. If the buffer is too large, it is cleared.
-         *
-         * @param connection
-         *  The connection to check.
-         */
-         private void CheckBufferSize(Connection connection) {
-            if(legalMaxBufferSize != 0 && connection.Buffer.Length > legalMaxBufferSize) {
-                OnLog("Client at host '" + connection.Address + "' has reached the maximum buffer size of " + legalMaxBufferSize.ToString() + " bytes, clearing buffer.", Logging.LogLevel.Warn);
-                connection.Buffer = "";
-                connection.Bytes = new byte[1024];
-            }
-         }
-        
-        /**
-         * Handles the connection's stop watch. If the buffer was last handled over n milliseconds ago, the buffer is cleared.
-         *
-         * @param connection
-         *  The connection to check.
-         */
-        private void CheckStopwatch(Connection connection) {
-            if(connection.Buffer != "") {
-                if(connection.Watch.IsRunning) {
-                    if(legalMaxBufferAge != 0 && connection.Watch.Elapsed.TotalMilliseconds >= legalMaxBufferAge) {
-                        OnLog("Client at host '" + connection.Address + "' has reached the maximum buffer age of " + legalMaxBufferAge.ToString() + " milliseconds, clearing buffer.", Logging.LogLevel.Warn);
-                        connection.Bytes = new byte[1024];
-                        connection.Buffer = "";
-                        connection.Watch.Reset();
-                    }
-                }else{
-                    connection.Watch.Start();
-                }
-            }else{
-                connection.Watch.Stop();
-            }
-        }
 
-        /**
-         * Timer elapse event handler, raised only when the client has timed out.
-         *
-         * @param source
-         *  The sending object.
-         * @param e
-         *  The elapsed event arguments.
-         */
-        private void OnTimeout(object source, ElapsedEventArgs e) {
+        /// <summary>
+        /// Timer elapse event handler, raised only when the client has timed out
+        /// </summary>
+        /// <param name="source">The timer that elapsed.</param>
+        /// <param name="e">Event arguments.</param>
+        private void TimeoutEventHandler(object source, ElapsedEventArgs e) {
             Limits.TimeoutTimer timer = (Limits.TimeoutTimer) source;
             timer.Stop();
             Connection connection = (Connection) timer.Tag;
-            TimeoutEvent(connection, timer.Interval);
+            if(OnTimeout != null) OnTimeout(connection, timer.Interval);
         }
         
-        /**
-         * Raises the connect event, which signals a new client has connected.
-         *
-         * @param client
-         *  The new client.
-         */
-        private void OnConnect(Connection client) {
-            if(ConnectEvent != null) ConnectEvent(client);
+        /// <summary>
+        /// Raises the OnConnect event.
+        /// </summary>
+        /// <param name="client">Client.</param>
+        private void Connected(Connection client) {
+            if(OnConnect != null) OnConnect(client);
         }
         
-        /**
-         * Raises the receive event, which signals a packet has been received from a client.
-         *
-         * @param client
-         *  The client we received data from.
-         * @param packet
-         *  The packet received.
-         */
-        private void OnReceive(Connection client, string packet) {
-            if(ReceiveEvent != null) ReceiveEvent(client, packet);
+        /// <summary>
+        /// Raises the on receive event.
+        /// </summary>
+        /// <param name="client">Client.</param>
+        /// <param name="packet">Packet.</param>
+        private void Received(Connection client, string packet) {
+            if(OnReceive != null) OnReceive(client, packet);
         }
         
-        /**
-         * Raises the disconnect event, which sigals a client has disconnected from the server.
-         *
-         * @param client
-         *  The client which disconnected.
-         */
-        private void OnDisconnect(Connection client) {
-            if(DisconnectEvent != null) DisconnectEvent(client);
+        /// <summary>
+        /// Raises the OnDisconnect event.
+        /// </summary>
+        /// <param name="client">Client.</param>
+        private void Disconnected(Connection client) {
+            if(OnDisconnect != null) OnDisconnect(client);
         }
 
-        /**
-         * Raises the log event.
-         *
-         * @param text
-         *  The text to log.
-         * @param level
-         *  The log level.
-         */
-        public void OnLog(string text, Logging.LogLevel level) {
-            if(LogEvent != null) LogEvent(text, level);
+        /// <summary>
+        /// Raises the OnLog event.
+        /// </summary>
+        /// <param name="text">Log text.</param>
+        /// <param name="level">Log level.</param>
+        public void Log(string text, Logging.LogLevel level) {
+            if(OnLog != null) OnLog(text, level);
         }
 
-        /**
-         * Raises the log event.
-         *
-         * @param text
-         *  The text to log.
-         */
-        public void OnLog(string text) {
-            OnLog(text, Logging.LogLevel.Info);
+        /// <summary>
+        /// Raises the OnLog event.
+        /// </summary>
+        /// <param name="text">Log text.</param>
+        public void Log(string text) {
+            Log(text, Logging.LogLevel.Info);
         }
     }
 
